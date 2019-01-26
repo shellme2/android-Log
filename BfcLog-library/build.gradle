@@ -1,0 +1,45 @@
+apply plugin: 'com.android.library'
+
+
+def gitHead = 'git rev-parse --short HEAD'.execute([], project.rootDir).text.trim()
+def gitTag = 'git describe --tags'.execute([], project.rootDir).text.trim()
+def buildTime = new Date().format("yyyy-MM-dd'T'HH:mm:ss'Z'", TimeZone.getTimeZone("UTC"))
+
+android {
+    compileSdkVersion bfcBuildConfig.compileSdkVersion
+    buildToolsVersion bfcBuildConfig.buildToolsVersion
+
+    defaultConfig {
+        versionCode VERSION_CODE as int
+        versionName VERSION_NAME
+
+        minSdkVersion bfcBuildConfig.minSdkVersion
+        targetSdkVersion bfcBuildConfig.targetSdkVersion
+        // maven对应生成的项目名
+//        archivesBaseName = "bfc-log"
+
+        buildConfigField "String", "GIT_HEAD", "\"${gitHead}\""
+        buildConfigField "String", "GIT_TAG", "\"${gitTag}\""
+        buildConfigField "String", "BUILD_TIME", "\"${buildTime}\""
+        buildConfigField "String", "LIBRARY_NAME", "\"${POM_ARTIFACT_ID}\""
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile bfcBuildConfig.deps.'support-annotations'
+
+    testCompile bfcBuildConfig.deps.junit
+}
+
+
+apply from:"http://172.28.2.93/bfc/Bfc/raw/develop/common-config/maven-push.gradle"

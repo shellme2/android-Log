@@ -1,0 +1,7 @@
+include ':BfcLogDemo', ':BfcLog-library'
+include ':Bfclog-aop-library'
+//include ':BfcLog-plugin'
+
+//修改下项目名, 用于修改maven的artifactId
+include ':bfc-log-plugin'
+project(':bfc-log-plugin').projectDir = new File('./BfcLog-plugin')

@@ -1,0 +1,18 @@
+ext {
+    // 编译分支名称，此值由Jenkins构建任务根据构建的版本自动修改，请勿改动
+    BUILD_BRANCH_NAME = 'develop'
+
+//    app 的配置
+    VERSION_NAME = '5.0.0'
+    VERSION_CODE = 14
+
+    dependencies = [
+            support_v4    : 'com.android.support:support-v4:24.0.0',
+            support_v7    : 'com.android.support:appcompat-v7:24.0.0',
+            support_design: 'com.android.support:design:24.0.0',
+            butterknife   : 'com.jakewharton:butterknife:7.0.1',
+            rxbinding     : 'com.jakewharton.rxbinding:rxbinding:0.4.0',
+
+            aspectj       : 'org.aspectj:aspectjrt:1.8.6'
+    ]
+}

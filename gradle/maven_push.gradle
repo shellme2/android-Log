@@ -1,0 +1,62 @@
+apply plugin: 'maven'
+
+group = POM_GROUP_ID
+version = VERSION_NAME
+
+MAVEN_RELEASE_URL = "http://172.28.1.147:8081/nexus/content/repositories/thirdparty/"
+MAVEN_RC_URL = "http://172.28.1.147:8081/nexus/content/repositories/thirdparty-rc/"
+MAVEN_SNAPSHOT_URL = 'http://172.28.1.147:8081/nexus/content/repositories/thirdparty-snapshot/'
+
+//登录nexus oss的用户名
+NEXUS_USERNAME = 'admin'
+//登录nexus oss的密码
+NEXUS_PASSWORD = 'admin123'
+
+def isRcBuild() {
+    return VERSION_NAME.contains("-rc") == true
+}
+
+def isBetaBuild() {
+    return VERSION_NAME.contains("-beta") == true
+}
+
+def getRepositoryUrl() {
+    if("master".equals(BUILD_BRANCH_NAME)){
+        return MAVEN_RELEASE_URL
+    }
+    return isRcBuild() ? MAVEN_RC_URL : MAVEN_SNAPSHOT_URL
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: getRepositoryUrl()) {
+                authentication(userName: NEXUS_USERNAME, password: NEXUS_PASSWORD)
+            }
+        }
+    }
+}
+
+/*uploadArchives {
+    repositories {
+        mavenDeployer {
+            *//*repository(url: uri('../repo'))
+
+            snapshotRepository(url: MAVEN_SNAPSHOT_URL) {
+                authentication(userName: NEXUS_USERNAME, password: NEXUS_PASSWORD)
+            }*//*
+
+            repository(url: MAVEN_URL) {
+                authentication(userName: NEXUS_USERNAME, password: NEXUS_PASSWORD)
+            }
+
+            pom.project {
+                version VERSION_NAME
+                artifactId "bfc-log"
+                groupId GROUP
+                packaging TYPE
+//                description "日志库用于打印方法耗时的依赖"
+            }
+        }
+    }
+}*/
