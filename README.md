@@ -209,6 +209,3 @@ private String add(int x, String input){
 ![bfclog_time](http://172.28.2.93/bfc/BfcLog/raw/develop/doc/pic/584eb5a8cd4bca9b5b670aae9fab48d8.png)     
 统计效果如上图, 会将输入输出参数 和耗时打印出来
 
-### 错误码
-无
-
